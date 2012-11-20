@@ -1,0 +1,22 @@
+{
+    "name": "alphalemon/search-bunble",
+    "description": "",
+    "autoload": {
+        "psr-0": { "": "src/" }
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "http://apps.alphalemon.com/"
+        }
+    ],
+    "require": {
+        "exercise/elastica-bundle": "dev-master"
+    },
+    "autoload": {
+        "psr-0": { "AlphaLemon\\Block\\SearchBlockBundle\\SearchBlockBundle": ""
+        }
+    },
+    "target-dir" : "AlphaLemon/Block/SearchBlockBundle",
+    "minimum-stability": "dev"
+}

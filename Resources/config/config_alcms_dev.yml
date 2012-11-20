@@ -1,0 +1,2 @@
+imports:
+- { resource: "@SearchBlockBundle/Resources/config/config_alcms.yml" }

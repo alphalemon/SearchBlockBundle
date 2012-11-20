@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database namespace="AlphaLemon\AlphaLemonCmsBundle\Model" name="default"  defaultIdMethod="native" >
+
+  <table name="al_site" idMethod="native">
+    <column name="id" type="INTEGER" required="true" autoIncrement="true" primaryKey="true" />
+    <column name="name" type="VARCHAR" size="255" required="true" default="" />
+    <column name="url" type="VARCHAR" size="255" required="true" default="" />
+    <column name="keywords" type="VARCHAR" size="255" required="true" />
+    
+    <vendor type="mysql">
+        <parameter name="Engine" value="InnoDB"/>
+        <parameter name="Charset" value="utf8"/>
+        <parameter name="AutoIncrement" value="1"/>
+    </vendor>
+  </table>
+</database>

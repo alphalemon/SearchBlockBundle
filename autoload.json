@@ -1,0 +1,10 @@
+{
+    "bundles" : {
+        "AlphaLemon\\Block\\SearchBlockBundle\\SearchBlockBundle" : {
+            "environments" : ["all"]
+        },
+        "FOQ\\ElasticaBundle\\FOQElasticaBundle" : {
+            "environments" : ["all"]
+        }
+    }
+}

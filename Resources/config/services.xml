@@ -1,0 +1,26 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+<!--
+    <parameters>
+        <parameter key="search_block.after_deploy.class">AlphaLemon\Block\SearchBlockBundle\Core\Listener\DeployListener</parameter>
+    </parameters>-->
+    
+    <services>
+        <service id="alphalemon.search_provider.search" class="AlphaLemon\Block\SearchBlockBundle\Core\SearchProvider\SearchProvider">
+            <tag name="foq_elastica.provider" index="website" type="search" />
+            <argument type="service" id="foq_elastica.index.website.search" />
+            <argument type="service" id="kernel" />
+            <argument type="service" id="router" />
+            <argument>%alpha_lemon_theme_engine.deploy_bundle%</argument>
+        </service>
+        
+        <!--
+        <service id="search_block.after_deploy" class="%search_block.after_deploy.class%">
+            <argument type="service" id="alpha_lemon_cms.block_manager_factory" />
+            <tag name="alcms.event_listener" event="deploy.after_local_deploy" method="onAfterDeploy" priority="0" />
+        </service>-->
+    </services>
+</container>
