@@ -22,12 +22,14 @@ abstract class AlSearchFormRenderingListener extends AlSearchBaseListener
     protected function renderSlotContents()
     {
         $this->requiredOptions = array(
-            'route' => '', 
+            'page' => '', 
             'slot' => '',
         );
         $options = $this->validateOptions();
+        
+        $request = $this->container->get('request');
         $destinationSlot = $options["slot"];
-        $routeName = $options["route"];
+        $routeName = sprintf('_%s_%s', $request->getLocale(), $options["page"]);
         
         $search = new Search();
         $form = $this->container->get('form.factory')->create(new SearchForm(), $search);
