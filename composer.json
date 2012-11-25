@@ -13,7 +13,7 @@
         "exercise/elastica-bundle": "dev-master"
     },
     "autoload": {
-        "psr-0": { "AlphaLemon\\Block\\SearchBlockBundle\\SearchBlockBundle": ""
+        "psr-0": { "AlphaLemon\\Block\\SearchBlockBundle": ""
         }
     },
     "target-dir" : "AlphaLemon/Block/SearchBlockBundle",
