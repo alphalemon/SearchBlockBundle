@@ -42,6 +42,12 @@ class SearchProvider implements ProviderInterface
         $documents = array();      
         $routesPath = $deployBundlePath . '/Resources/config/site_routing.yml';
         $routes = Yaml::parse($routesPath);
+        if (null === $routes) {
+            $loggerClosure('Any route defined. Please deploy the website then run this command again');
+            
+            return;
+        }
+        
         $routes = array_keys($routes);
         foreach ($routes as $route) {
             $link = $this->router->generate($route);
