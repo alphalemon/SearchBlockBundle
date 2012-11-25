@@ -1,15 +1,14 @@
 {
-    "name": "alphalemon/search-bunble",
-    "description": "",
-    "autoload": {
-        "psr-0": { "": "src/" }
-    },
-    "repositories": [
-        {
-            "type": "composer",
-            "url": "http://apps.alphalemon.com/"
-        }
-    ],
+    "name": "alphalemon/app-elastic-search-bundle",
+    "description": "An AlphaLemon CMS app that adds the elasticsearch search engine to your website",
+    "keywords": ["alphalemon", "cms", "app"],
+    "homepage": "http://alphalemon.com",
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "authors": [{
+      "name": "AlphaLemon",
+      "email": "info@alphalemon.com"
+    }],
     "require": {
         "exercise/elastica-bundle": "dev-master"
     },
