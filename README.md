@@ -18,12 +18,31 @@ CMS, adding it to the **composer.json** of your Symfony2 application:
 
     {
         "name": "alphalemon/alphalemon-cms-sandbox",
+
         [...]
+
         "require": {
+
             [...]        
+
             "alphalemon/app-elastic-search-bundle": "dev-master",        
         }
     }
+
+Be sure that there is declared the reference to **http://apps.alphalemon.com** repository,
+under the **repositories** option:
+
+.. code-block:: text
+
+    "repositories": [
+
+        [...]
+
+        {
+            "type": "composer",
+            "url": "http://apps.alphalemon.com/"
+        }
+    ],
 
 then run the composer's update command:
 
