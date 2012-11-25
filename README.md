@@ -47,7 +47,7 @@ easy because the Search Bundle provides two base classes that did that job.
     A listener is a php object that waits for a specific event is dispatched and does 
     something in reaction of that.
 
-    Listeners should live under the **Listener** folder of your deploy bundle, so add that 
+    Listener should live under the **Listener** folder of your deploy bundle, so add that 
     folder if it does not exist.
 
 
@@ -64,15 +64,15 @@ is **search**.
 
 The Search results listener
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Create a **SearchFormListener.php** under the **Listener** folder and add the following code:
+Create a **AlSearchResultsRenderingListener.php** under the **Listener** folder and add the following code:
 
 .. code-block:: php
 
-    namespace Acme\WebSiteBundle\Listeners;
+    namespace Acme\WebSiteBundle\Listener;
 
-    use AlphaLemon\Block\SearchBlockBundle\Core\Listener\AlSearchResultsRenderingListener;
+    use AlphaLemon\Block\SearchBlockBundle\Core\Listener\AlSearchResultsRenderingListener as BaseSearchResultsRenderingListener;
 
-    class AlSearchRenderingListener extends AlSearchResultsRenderingListener
+    class AlSearchResultsRenderingListener extends BaseSearchResultsRenderingListener
     {
         protected function configure()
         {
@@ -102,7 +102,7 @@ the **Resources/config/service.xml** of your deploy bundle and add the following
 
         [...]
 
-        <parameter key="acme_web_site.search_listener.class">Acme\WebSiteBundle\Listeners\AlSearchRenderingListener</parameter>
+        <parameter key="acme_web_site.search_listener.class">Acme\WebSiteBundle\Listener\AlSearchResultsRenderingListener</parameter>
     </parameters>
 
     <services>
@@ -118,26 +118,29 @@ the **Resources/config/service.xml** of your deploy bundle and add the following
 
 .. note::
 
-    The **acme_web_site.search_listener.class** must reflect the name of your listener
+    The **acme_web_site.search_listener.class** must reflect the full namespace of your listener
 
 
 The Search Form listener
 ~~~~~~~~~~~~~~~~~~~~~~~~
-The Search Form listener must display the search form on the page, so create a **SearchFormListener.php** 
+The Search Form listener must display the search form on the page, so create a **AlSearchFormRenderingListener.php** 
 under the **Listener** folder and add the following code:
 
 .. code-block:: php
 
-    namespace Acme\WebSiteBundle\Listeners;
+    namespace Acme\WebSiteBundle\Listener;
 
-    use AlphaLemon\Block\SearchBlockBundle\Core\Listener\AlSearchFormRenderingListener;
+    use AlphaLemon\Block\SearchBlockBundle\Core\Listener\AlSearchFormRenderingListener as BaseSearchFormRenderingListener;
 
-    class AlPageRenderingListener extends AlSearchFormRenderingListener
+    class AlSearchFormRenderingListener extends BaseSearchFormRenderingListener
     {
-        return array(
-            'slot' => 'search_box',
-            'page' => 'search',
-        );
+        protected function configure()
+        {
+            return array(
+                'slot' => 'search_box',
+                'page' => 'search',
+            );
+        }
     }
 
 The listener extends the abstract Search Bundle object **AlSearchFormRenderingListener**
@@ -166,7 +169,7 @@ the **Resources/config/service.xml** of your deploy bundle and add the following
 
         [...]
 
-        <parameter key="acme_web_site.page_listener.class">AlphaLemon\WebSiteBundle\Core\Listeners\AlPageRenderingListener</parameter>
+        <parameter key="acme_web_site.page_listener.class">Acme\WebSiteBundle\Listener\AlSearchFormRenderingListener</parameter>
     </parameters>
 
     <services>
