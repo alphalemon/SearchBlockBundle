@@ -10,7 +10,7 @@ namespace AlphaLemon\Block\SearchBlockBundle\Core\Formatter;
 class Formatter
 {
     protected $index;
-    protected $numberOfWords = 30;
+    protected $maxChars = 300;
             
     public function __construct($index)
     {
@@ -30,48 +30,65 @@ class Formatter
             $result = array();
             foreach ($pages as $page) {
                 $data = $page->getData();            
-                $result[] = sprintf('<a href="%s">%s</a><br />%s<br />', $data['url'], $siteUrl . $data['url'], $this->formatDescription($search, $data['contents']));
+                $result[] = sprintf('<a href="%s">%s</a><br />%s<br />', $data['url'], $siteUrl . $data['url'], $this->renderDescription($data['contents'], array($search)));
             }
 
-            return implode("<br />", $result);
+            return '<style>.match{color: #FF6600;font-weight:bold;}</style>' . implode("<br />", $result);
         }
         catch(\Elastica_Exception_Client $ex) {
             return "Search server is down at the moment. Sorry for any inconvenience caused.";
         }
         catch(\Exception $ex) {
+        echo $ex->getMessage();exit;
             return "An unespected error has occoured during processinig your request. Sorry for any inconvenience caused.";
         }
     }
     
     public function setNumberOfWords($v)
     {
-        $this->numberOfWords = $v;
+        $this->maxChars = $v;
     }
     
-    protected function formatDescription($search, $content)
+    /**
+     * Renders the description proving a snippet of the content which contains the 
+     * keyword
+     * 
+     * Credits for this snippet goes to Harmen Janssen http://whatstyle.net
+     * 
+     * @param type $content
+     * @param type $searchTerms
+     * @return type
+     */
+    protected function renderDescription ($content ,$searchTerms)
     {
-        $words = 0;
-        $description = "";
-        $tokens = explode(" ", $content);
-        foreach ($tokens as $token) {
-            if ($words > 0) {
-                $description .= $token . " ";
-                if ($words == $this->numberOfWords) {
-                    break;
+        $chunk = '';
+        foreach ($searchTerms as $searchTerm) {
+            if (preg_match("/$searchTerm/",$content)) {
+                $pos = strpos ($content,$searchTerm);
+                if (($pos - ($this->maxChars/2)) < 0) {
+                        $startPos = 0;
                 }
-                $words++;
-            }
-
-            if ($token == $search) {
-                $description .= "<b>" . $token . "</b> ";
-                $words++;
+                else {
+                        $startPos = ($pos - ($this->maxChars/2));
+                        $chunk .= '...';
+                }
+                
+                $chunk .= substr($content,$startPos,$this->maxChars);
+                
+                if (($pos + ($this->maxChars/2)) < strlen($content)) {
+                        $chunk .= '...';
+                }
+                break;
             }
         }
-
-        if ($this->numberOfWords == 30) {
-            $description .= "...";
+        if ($chunk == '') {
+            $chunk = substr($content,0,$this->maxChars).'...';
         }
         
-        return $description;
-    }
+        foreach ($searchTerms as $term) {
+            $chunk = str_replace ($term,"<span class=\"match\">$term</span>",$chunk);
+        }
+        
+        return $chunk;
+    }    
 }
